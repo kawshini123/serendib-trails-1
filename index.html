@@ -41,7 +41,7 @@
       <div class="container hero-content reveal">
         <p class="eyebrow light">Private tours · Local experts · 100% tailor-made</p>
         <h1 id="hero-title">See Sri Lanka<br><em>beyond the guidebook.</em></h1>
-        <p class="hero-copy">Ancient cities, misty mountains, wild national parks and tropical shores—woven into one private journey, made just for you.</p>
+        <p class="hero-copy">Ancient cities,misty mountains, wild national parks and tropical shores—woven into one private journey, made just for you.</p>
         <div class="hero-actions"><a class="btn" href="#plan">Plan my Sri Lanka trip</a><a class="text-link light-link" href="#tours">Explore our tours <span>↗</span></a></div>
       </div>
       <form class="trip-finder" id="tripFinder" novalidate>
@@ -72,7 +72,7 @@
           <p>Our Colombo-based team pairs thoughtfully paced routes with characterful stays, trusted driver-guides and experiences that bring you closer to the island.</p>
           <div class="stats"><div><b>2,500+</b><span>happy travellers</span></div><div><b>45+</b><span>curated experiences</span></div><div><b>24/7</b><span>on-trip support</span></div></div>
           <button class="text-link open-story" type="button">Meet our local team <span>↗</span></button>
-        </div>
+        </div> 
       </div>
     </section>
 
@@ -143,107 +143,11 @@
     </div></section>
   </main>
 
-  <!-- Floating Gemini AI Chat Widget -->
-<div id="ai-chat-widget" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; font-family: 'Manrope', sans-serif;">
-  <!-- Chat Toggle Button -->
-  <button id="ai-chat-toggle" onclick="toggleChat()" style="background: #123d35; color: white; border: none; border-radius: 50px; padding: 12px 20px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.15); font-weight: 600; display: flex; align-items: center; gap: 8px;">
-    <span>💬</span> Ask Travel AI
-  </button>
-
-  <!-- Chat Box (Initially Hidden) -->
-  <div id="ai-chat-box" style="display: none; width: 320px; background: white; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.2); overflow: hidden; border: 1px solid #ddd; margin-bottom: 10px;">
-    <div style="background: #123d35; color: white; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
-      <strong>Serendib AI Assistant</strong>
-      <button onclick="toggleChat()" style="background: none; border: none; color: white; font-size: 16px; cursor: pointer;">✕</button>
-    </div>
-    <div id="ai-chat-messages" style="height: 250px; overflow-y: auto; padding: 12px; font-size: 14px; background: #f9f9f9; display: flex; flex-direction: column; gap: 8px;">
-      <div style="background: #e2e8f0; padding: 8px 12px; border-radius: 8px; max-width: 80%;">Hello! How can I help you plan your Sri Lanka trip today?</div>
-    </div>
-    <div style="padding: 10px; display: flex; gap: 6px; border-top: 1px solid #ddd; background: white;">
-      <input type="text" id="ai-user-input" placeholder="Ask about tours, weather..." style="flex: 1; padding: 8px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px;" onkeypress="handleKeyPress(event)">
-      <button onclick="sendToGemini()" style="background: #123d35; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer;">Send</button>
-    </div>
-  </div>
-</div>
 
   <footer class="footer" id="contact"><div class="container"><div class="footer-main"><div class="footer-brand"><a class="brand" href="#home"><img src="assets/logo.svg" alt="" width="52" height="52"><span><b>Serendib</b> Trails</span></a><p>Private journeys through Sri Lanka, thoughtfully designed by people who call the island home.</p></div><div><h3>Explore</h3><a href="#tours">Tours</a><a href="#destinations">Destinations</a><a href="#experiences">Experiences</a><a href="#reviews">Reviews</a></div><div><h3>Contact</h3><a href="mailto:kawshinikawindya314@gmail.com">kawshinikawindya314@gmail.com</a><a href="tel:+94770582630">+94 77 058 2630</a><p>42 Flower Road<br>Colombo 07, Sri Lanka</p></div><div><h3>Island notes</h3><p>Travel stories and inspiration, occasionally.</p><form id="newsletter"><label class="sr-only" for="newsletterEmail">Email address</label><div class="newsletter"><input id="newsletterEmail" type="email" placeholder="Your email" required><button aria-label="Subscribe">→</button></div><small id="newsletterStatus" role="status"></small></form></div></div><div class="footer-bottom"><p>© <span id="year"></span> Serendib Trails. All rights reserved.</p><div><button class="policy-btn" data-policy="Privacy Policy">Privacy</button><button class="policy-btn" data-policy="Terms & Conditions">Terms</button><button class="policy-btn" data-policy="Responsible Travel Policy">Responsible travel</button></div></div></div></footer>
   <button class="back-top" aria-label="Back to top">↑</button>
 
   <dialog class="modal" id="contentModal"><button class="modal-close" aria-label="Close dialog">×</button><div id="modalContent"></div></dialog>
   <script src="js/script.js" defer></script>
-
-  <script>
-
-// Chat Box එක විවෘත කිරීම සහ වැසීම[cite: 5]
-function toggleChat() {
-  const chatBox = document.getElementById("ai-chat-box");
-  if (chatBox) {
-    chatBox.style.display = chatBox.style.display === "none" ? "block" : "none";
-  }
-}
-
-// Enter බොත්තම එබූ විට පණිවිඩය යැවීමට[cite: 5]
-function handleKeyPress(event) {
-  if (event.key === "Enter") {
-    sendToGemini();
-  }
-}
-
-// Gemini වෙත පණිවිඩය යැවීම සහ පිළිතුරු ලබා ගැනීම[cite: 5]
-async function sendToGemini() {
-  const inputField = document.getElementById("ai-user-input");
-  const messagesDiv = document.getElementById("ai-chat-messages");
-  if (!inputField || !messagesDiv) return;
-  
-  const userText = inputField.value.trim();
-  if (!userText) return;
-
-  // පාරිභෝගිකයාගේ පණිවිඩය චැට් එකට එකතු කිරීම[cite: 5]
-  messagesDiv.innerHTML += `<div style="background: #123d35; color: white; padding: 8px 12px; border-radius: 8px; max-width: 80%; align-self: flex-end; margin-left: auto;">${userText}</div>`;
-  inputField.value = "";
-  messagesDiv.scrollTop = messagesDiv.scrollHeight;
-
-  // Loading සටහන[cite: 5]
-  const loadingId = "loading-" + Date.now();
-  messagesDiv.innerHTML += `<div id="${loadingId}" style="background: #e2e8f0; padding: 8px 12px; border-radius: 8px; max-width: 80%;">Thinking...</div>`;
-  messagesDiv.scrollTop = messagesDiv.scrollHeight;
-
-  const apiKey = "AQ.Ab8RN6Kj6DCr81hl3IztNVHvQnPYzCrWZD9WFu5NMEYxL3Tqeg"; // මෙතනට ඔබේ Google AI Studio API Key එක දාන්න[cite: 5]
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: [
-          {
-            parts: [
-              {
-                text:
-                  "You are a friendly and helpful travel assistant for 'Serendib Trails', a private Sri Lankan travel agency. Answer this customer's question concisely: " +
-                  userText,
-              },
-            ],
-          },
-        ],
-      }),
-    });
-
-    const data = await response.json();
-    const reply = data.candidates[0].content.parts[0].text;
-
-    // Loading ඉවත් කර AI ප්‍රතිචාරය පෙන්වීම[cite: 5]
-    document.getElementById(loadingId).remove();
-    messagesDiv.innerHTML += `<div style="background: #e2e8f0; color: #333; padding: 8px 12px; border-radius: 8px; max-width: 80%;">${reply}</div>`;
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-  } catch (error) {
-    const loadingElem = document.getElementById(loadingId);
-    if (loadingElem) loadingElem.remove();
-    messagesDiv.innerHTML += `<div style="background: #fee2e2; color: #991b1b; padding: 8px 12px; border-radius: 8px; max-width: 80%;">Sorry, I'm having trouble connecting right now.</div>`;
-  }
-}
-
-  </script>
 </body>
 </html>
