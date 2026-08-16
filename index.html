@@ -171,5 +171,79 @@
 
   <dialog class="modal" id="contentModal"><button class="modal-close" aria-label="Close dialog">×</button><div id="modalContent"></div></dialog>
   <script src="js/script.js" defer></script>
+
+  <script>
+
+// Chat Box එක විවෘත කිරීම සහ වැසීම[cite: 5]
+function toggleChat() {
+  const chatBox = document.getElementById("ai-chat-box");
+  if (chatBox) {
+    chatBox.style.display = chatBox.style.display === "none" ? "block" : "none";
+  }
+}
+
+// Enter බොත්තම එබූ විට පණිවිඩය යැවීමට[cite: 5]
+function handleKeyPress(event) {
+  if (event.key === "Enter") {
+    sendToGemini();
+  }
+}
+
+// Gemini වෙත පණිවිඩය යැවීම සහ පිළිතුරු ලබා ගැනීම[cite: 5]
+async function sendToGemini() {
+  const inputField = document.getElementById("ai-user-input");
+  const messagesDiv = document.getElementById("ai-chat-messages");
+  if (!inputField || !messagesDiv) return;
+  
+  const userText = inputField.value.trim();
+  if (!userText) return;
+
+  // පාරිභෝගිකයාගේ පණිවිඩය චැට් එකට එකතු කිරීම[cite: 5]
+  messagesDiv.innerHTML += `<div style="background: #123d35; color: white; padding: 8px 12px; border-radius: 8px; max-width: 80%; align-self: flex-end; margin-left: auto;">${userText}</div>`;
+  inputField.value = "";
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+  // Loading සටහන[cite: 5]
+  const loadingId = "loading-" + Date.now();
+  messagesDiv.innerHTML += `<div id="${loadingId}" style="background: #e2e8f0; padding: 8px 12px; border-radius: 8px; max-width: 80%;">Thinking...</div>`;
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+  const apiKey = "AQ.Ab8RN6Kj6DCr81hl3IztNVHvQnPYzCrWZD9WFu5NMEYxL3Tqeg"; // මෙතනට ඔබේ Google AI Studio API Key එක දාන්න[cite: 5]
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [
+          {
+            parts: [
+              {
+                text:
+                  "You are a friendly and helpful travel assistant for 'Serendib Trails', a private Sri Lankan travel agency. Answer this customer's question concisely: " +
+                  userText,
+              },
+            ],
+          },
+        ],
+      }),
+    });
+
+    const data = await response.json();
+    const reply = data.candidates[0].content.parts[0].text;
+
+    // Loading ඉවත් කර AI ප්‍රතිචාරය පෙන්වීම[cite: 5]
+    document.getElementById(loadingId).remove();
+    messagesDiv.innerHTML += `<div style="background: #e2e8f0; color: #333; padding: 8px 12px; border-radius: 8px; max-width: 80%;">${reply}</div>`;
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  } catch (error) {
+    const loadingElem = document.getElementById(loadingId);
+    if (loadingElem) loadingElem.remove();
+    messagesDiv.innerHTML += `<div style="background: #fee2e2; color: #991b1b; padding: 8px 12px; border-radius: 8px; max-width: 80%;">Sorry, I'm having trouble connecting right now.</div>`;
+  }
+}
+
+  </script>
 </body>
 </html>
